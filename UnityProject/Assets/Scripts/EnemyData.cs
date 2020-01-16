@@ -17,4 +17,9 @@ public class EnemyData : ScriptableObject
     public float cd;
     [Header("停止距離"), Range(0.5f, 100)]
     public float stopDistance;
+
+    [Header("近距離單位")]
+    public float attackY;
+    public float attackLength;
+    public float attackDelay;
 }

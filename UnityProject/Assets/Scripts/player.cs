@@ -6,6 +6,8 @@ public class player : MonoBehaviour
 {
     [Header("速度"), Range(0, 1500)]
     public float speed = 1.5f;
+    [Header("玩家資料")]
+    public playerData data;
 
     
 
@@ -63,7 +65,14 @@ public class player : MonoBehaviour
         transform.LookAt(posTarget);
     }
 
-    
+    /// <summary>
+    /// 受傷
+    /// </summary>
+    /// <param name="damage">接收的傷害值</param>
+    public void Hit(float damage)
+    {
+        data.hp -= damage;
+    }
 }
 
 
