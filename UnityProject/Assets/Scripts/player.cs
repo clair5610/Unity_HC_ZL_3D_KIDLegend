@@ -13,18 +13,22 @@ public class player : MonoBehaviour
 
     private Rigidbody rig;
     private FixedJoystick Joystick;
-    private Animator ani; // 動畫控制器元件
-    private Transform target; //目標物件
-    private LevelManager levelManager;
+    private Animator ani;                  // 動畫控制器元件
+    private Transform target;              // 目標物件
+    private LevelManager levelManager;     // 關卡管理器
+    private HpValueManager hpValueManager; // 血條數值
 
     private void Start()
     {
         rig = GetComponent<Rigidbody>();
         ani = GetComponent<Animator>(); // 動畫控制器 = 取得元件<動畫控制器>()
         Joystick = GameObject.Find("虛擬搖桿").GetComponent<FixedJoystick>();
+
         //target = GameObject.Find("虛擬搖桿").GetComponent<Transform>();
         target = GameObject.Find("目標").transform;
-        levelManager = FindObjectOfType<LevelManager>(); // 透過類型尋找物件(場景上只有一個的時候)
+
+        levelManager = FindObjectOfType<LevelManager>();            // 透過類型尋找物件(場景上只有一個的時候)
+        hpValueManager = GetComponentInChildren<HpValueManager>();  // 取得Unity子物件元件 
     }
 
     // 固定更新 : 一秒執行 50 次 - 處理物理行為
@@ -72,7 +76,11 @@ public class player : MonoBehaviour
     public void Hit(float damage)
     {
         data.hp -= damage;
+        hpValueManager.SetHp(data.hp, data.hpMax);   // 更新血量(目前(血量),最大(血量))
+        StartCoroutine(hpValueManager.ShowValue(damage, "-", Color.white));
     }
+
+    
 }
 
 
