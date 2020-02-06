@@ -75,12 +75,23 @@ public class player : MonoBehaviour
     /// <param name="damage">接收的傷害值</param>
     public void Hit(float damage)
     {
+        if (ani.GetBool("死亡開關")) return;                                  // 如果 死亡開關 是勾選 跳出
         data.hp -= damage;
-        hpValueManager.SetHp(data.hp, data.hpMax);   // 更新血量(目前(血量),最大(血量))
-        StartCoroutine(hpValueManager.ShowValue(damage, "-", Color.white));
+        hpValueManager.SetHp(data.hp, data.hpMax);                            // 更新血量(目前(血量),最大(血量))
+        StartCoroutine(hpValueManager.ShowValue(damage, "-", Color.white));   // 啟動協程
+        if (data.hp <= 0) Dead();
     }
 
-    
+    /// <summary>
+    /// 死亡
+    /// </summary>
+    private void Dead()
+    {
+        ani.SetBool("死亡開關", true);    // 死亡動畫
+        enabled = false;                  // 關閉此腳本 (this.enabled = false , this可省略)
+
+        StartCoroutine(levelManager.ShowRevival());
+    }
 }
 
 

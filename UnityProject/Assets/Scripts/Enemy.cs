@@ -25,7 +25,7 @@ public class Enemy : MonoBehaviour
 
     private void Update()
     {
-        move();
+        Move();
     }
 
     // 內容收起 Ctrl + M O
@@ -43,18 +43,12 @@ public class Enemy : MonoBehaviour
         timer = 0;                    // 時間歸零 ( 攻擊後時間歸零 )
     }
 
-    /// <summary>
-    /// 死亡
-    /// </summary>
-    private void dead()
-    {
-
-    }
+    
 
     /// <summary>
     /// 等待
     /// </summary>
-    private void wait()
+    private void Wait()
     {
         ani.SetBool("跑步開關", false);  // 等待動畫
         timer += Time.deltaTime;         // 計時器累加
@@ -70,7 +64,7 @@ public class Enemy : MonoBehaviour
     /// <summary>
     /// 移動
     /// </summary>
-    private void move()
+    private void Move()
     {
         Vector3 posplayer = player.position;  // 區域三維向量 = 目標( 玩家 ).座標  讓怪物的位置和玩家重疊
         posplayer.y = transform.position.y;   // 三維向量.Y = 本身.Y  ( 為了不跌倒所以Y值必須保持怪物本身的 )
@@ -82,7 +76,7 @@ public class Enemy : MonoBehaviour
         // 如果 代理器.剩餘距離(離玩家的距離) < 資料.停止距離 (Data裡寫入到U的欄位設定的停止距離)
         if (nav.remainingDistance < data.stopDistance) 
         {
-            wait();  // 就變成 等待 狀態
+            Wait();  // 就變成 等待 狀態
         }
         // 
         else
@@ -95,7 +89,7 @@ public class Enemy : MonoBehaviour
     /// 受傷
     /// </summary>
     /// <param name="damage"></param>
-    private void hit(float damage)
+    private void Hit(float damage)
     {
 
     }
