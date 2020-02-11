@@ -12,11 +12,13 @@ public class LevelManager : MonoBehaviour
     public bool autoShowSkill;   // 是否顯示技能
     [Header("是否自動開門")]
     public bool autoOpenDoor;    // 是否自動開門
-    [Header("復活畫面")]
+    [Header("復活畫面，看廣告復活按鈕")]
     public GameObject panelRevival;
+    public Button btnRevival;
 
-    private Animator aniDoor;    // 門(動畫)
-    private Image imgCross;      // 轉場
+    private Animator aniDoor;     // 門(動畫)
+    private Image imgCross;       // 轉場
+    private AdManager adManager;  // 廣告管理器
 
     private void Start()
     {
@@ -36,6 +38,9 @@ public class LevelManager : MonoBehaviour
         // 重複調用("方法名稱"，延遲時間，重複頻率)
         // InvokeRepeating("OpenDoor", 0, 1.5f);
 
+        adManager = FindObjectOfType<AdManager>();                 // 透過類行尋找物件<廣告管理器>
+        btnRevival.onClick.AddListener(adManager.ShowADRevival);   // 按鈕.點及.增加監聽者(廣告管理器.顯示復活廣告)
+
     }
 
     /// <summary>
@@ -54,7 +59,10 @@ public class LevelManager : MonoBehaviour
         ObjLight.SetActive(true);
         aniDoor.SetTrigger("開門觸發");
     }
-
+    /// <summary>
+    /// 載入下一關
+    /// </summary>
+    /// <returns></returns>
     public IEnumerator NextLevel()
     {
         print("載入下一關");
@@ -70,7 +78,10 @@ public class LevelManager : MonoBehaviour
         SceneManager.LoadScene("關卡2");
         
     }
-
+    /// <summary>
+    /// 顯示復活畫面
+    /// </summary>
+    /// <returns></returns>
     public IEnumerator ShowRevival()
     {
         panelRevival.SetActive(true);
@@ -81,5 +92,13 @@ public class LevelManager : MonoBehaviour
             textSecond.text = i.ToString();       // 更新秒數
             yield return new WaitForSeconds(1);   // 等待1秒
         }
+    }
+    /// <summary>
+    /// 關閉復活畫面
+    /// </summary>
+    public void HideRevival()
+    {
+        StopCoroutine(ShowRevival());   // 停止協程
+        panelRevival.SetActive(false);  // 隱藏
     }
 }
