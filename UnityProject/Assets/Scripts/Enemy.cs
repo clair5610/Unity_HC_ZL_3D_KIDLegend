@@ -8,9 +8,10 @@ public class Enemy : MonoBehaviour
 
     private Animator ani;      // 動畫控制器
     private NavMeshAgent nav;  // 導覽網格代理器
-
     private Transform player;  // 玩家變形
     private float timer;
+    private HpValueManager hpValueManager; // 血條數值管理器
+    private LevelManager levelManager;     // 關卡管理器
 
     private void Start()
     {
@@ -21,6 +22,7 @@ public class Enemy : MonoBehaviour
         nav.stoppingDistance = data.stopDistance;
 
         player = GameObject.Find("女孩").GetComponent<Transform>();  // 取得玩家變形 
+        hpValueManager = GetComponentInChildren<HpValueManager>();  // 取得Unity子物件元件 
     }
 
     private void Update()
@@ -37,13 +39,13 @@ public class Enemy : MonoBehaviour
 
     // protected 保護 : 允許子類別存取，禁止外部類別存取
     // virtual 虛擬 : 允許子類別複寫
-    protected virtual void attack()       
+    protected virtual void attack()
     {
         ani.SetTrigger("攻擊觸發");   // 攻擊動畫
         timer = 0;                    // 時間歸零 ( 攻擊後時間歸零 )
     }
 
-    
+
 
     /// <summary>
     /// 等待
@@ -74,7 +76,7 @@ public class Enemy : MonoBehaviour
         // print("剩餘距離" + nav.remainingDistance);  輸出到 Unity 當前位置距离目標位置的距离
 
         // 如果 代理器.剩餘距離(離玩家的距離) < 資料.停止距離 (Data裡寫入到U的欄位設定的停止距離)
-        if (nav.remainingDistance < data.stopDistance) 
+        if (nav.remainingDistance < data.stopDistance)
         {
             Wait();  // 就變成 等待 狀態
         }
@@ -89,8 +91,22 @@ public class Enemy : MonoBehaviour
     /// 受傷
     /// </summary>
     /// <param name="damage"></param>
-    private void Hit(float damage)
+    public void Hit(float damage)
     {
+        if (ani.GetBool("死亡開關")) return;                                  // 如果 死亡開關 是勾選 跳出
+        data.hp -= damage;
+        hpValueManager.SetHp(data.hp, data.hpMax);                            // 更新血量(目前(血量),最大(血量))
+        StartCoroutine(hpValueManager.ShowValue(damage, "-", Color.white));   // 啟動協程
+        if (data.hp <= 0) Dead();
+    }
 
+    /// <summary>
+    /// 死亡
+    /// </summary>
+    private void Dead()
+    {
+        ani.SetBool("死亡開關", true);    // 死亡動畫
+        enabled = false;                  // 關閉此腳本 (this.enabled = false , this可省略)
+        StartCoroutine(levelManager.ShowRevival());
     }
 }

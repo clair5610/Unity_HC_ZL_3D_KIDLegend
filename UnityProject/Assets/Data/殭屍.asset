@@ -13,7 +13,8 @@ MonoBehaviour:
   m_Name: "\u6BAD\u5C4D"
   m_EditorClassIdentifier: 
   speed: 1.5
-  hp: 200
+  hp: -50
+  hpMax: 200
   attack: 20
   cd: 3.5
   stopDistance: 2
