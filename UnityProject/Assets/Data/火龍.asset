@@ -15,7 +15,7 @@ MonoBehaviour:
   speed: 0
   hp: 100
   hpMax: 100
-  attack: 40
+  attack: 30
   cd: 2.5
   stopDistance: 30
   attackY: 1.7
@@ -23,3 +23,4 @@ MonoBehaviour:
   attackDelay: 0
   attackZ: 1.6
   bulletPower: 1100
+  coinRange: {x: 100, y: 150}

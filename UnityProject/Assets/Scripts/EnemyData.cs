@@ -26,7 +26,9 @@ public class EnemyData : ScriptableObject
 
     [Header("遠距離子彈前方位移")]
     public float attackZ;
-
     [Header("遠距離子彈速度"), Range(0, 5000)]
     public int bulletPower;
+
+    [Header("金幣隨機範圍")]
+    public Vector2 coinRange;
 }

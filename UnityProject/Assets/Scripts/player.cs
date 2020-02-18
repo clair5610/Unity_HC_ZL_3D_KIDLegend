@@ -120,11 +120,18 @@ public class player : MonoBehaviour
         }
         else
         {
-            timer = 0;                      // 計時器 歸零
-            ani.SetTrigger("攻擊觸發");     // 攻擊動畫
-
             // 1. 取得所有敵人
             enemys = FindObjectsOfType<Enemy>();
+
+            // 過關
+            if (enemys.Length == 0)         // 如果沒有敵人就跳出
+            {
+                levelManager.Pass(); 
+                return;
+            }
+
+            timer = 0;                      // 計時器 歸零
+            ani.SetTrigger("攻擊觸發");     // 攻擊動畫
 
             // 2. 取得所有敵人的距離
 

@@ -101,4 +101,16 @@ public class LevelManager : MonoBehaviour
         StopCoroutine(ShowRevival());   // 停止協程
         panelRevival.SetActive(false);  // 隱藏
     }
+
+    public void Pass()
+    {
+        OpenDoor();
+
+        Item[] items = FindObjectsOfType<Item>();    // 取得所有道具
+
+        for (int i = 0; i < items.Length; i++)       // 迴圈跑每一個道具
+        {
+            items[i].pass = true;                    // 每個道具.過關 = 勾選
+        }
+    }
 }

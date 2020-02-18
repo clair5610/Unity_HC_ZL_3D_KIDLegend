@@ -4,8 +4,9 @@ using UnityEngine.AI;   // 引用 人工智慧 API
 public class Enemy : MonoBehaviour
 {
     [Header("怪物資料")]
-    public EnemyData data;
+    public EnemyData data;     // 腳本化物件 : 所有實體物件共用
 
+    private float hp;          // 欄位 : 所有實體物件獨立使用
     private Animator ani;      // 動畫控制器
     private NavMeshAgent nav;  // 導覽網格代理器
     private Transform player;  // 玩家變形
@@ -20,6 +21,7 @@ public class Enemy : MonoBehaviour
 
         nav.speed = data.speed;  // 調整 --> 代理器.速度 
         nav.stoppingDistance = data.stopDistance;
+        hp = data.hp;
 
         player = GameObject.Find("女孩").GetComponent<Transform>();  // 取得玩家變形 
         hpValueManager = GetComponentInChildren<HpValueManager>();  // 取得Unity子物件元件 
@@ -68,6 +70,8 @@ public class Enemy : MonoBehaviour
     /// </summary>
     private void Move()
     {
+        if (ani.GetBool("死亡開關")) return;
+
         Vector3 posplayer = player.position;  // 區域三維向量 = 目標( 玩家 ).座標  讓怪物的位置和玩家重疊
         posplayer.y = transform.position.y;   // 三維向量.Y = 本身.Y  ( 為了不跌倒所以Y值必須保持怪物本身的 )
         transform.LookAt(posplayer);          // 變形.看著 ( 三維向量 ) 讓怪物能注視著玩家
@@ -94,10 +98,10 @@ public class Enemy : MonoBehaviour
     public void Hit(float damage)
     {
         if (ani.GetBool("死亡開關")) return;                                  // 如果 死亡開關 是勾選 跳出
-        data.hp -= damage;
-        hpValueManager.SetHp(data.hp, data.hpMax);                            // 更新血量(目前(血量),最大(血量))
+        hp -= damage;
+        hpValueManager.SetHp(hp, data.hpMax);                            // 更新血量(目前(血量),最大(血量))
         StartCoroutine(hpValueManager.ShowValue(damage, "-", Color.white));   // 啟動協程
-        if (data.hp <= 0) Dead();
+        if (hp <= 0) Dead();
     }
 
     /// <summary>
@@ -106,7 +110,22 @@ public class Enemy : MonoBehaviour
     private void Dead()
     {
         ani.SetBool("死亡開關", true);    // 死亡動畫
-        enabled = false;                  // 關閉此腳本 (this.enabled = false , this可省略)
-        StartCoroutine(levelManager.ShowRevival());
+        nav.isStopped = true;             // 代理器 停止
+        Destroy(this);                    // Destroy(Getcomponent<元件>); 刪除元件
+        CreateCoin();
+    }
+
+    [Header("金球")]
+    public GameObject coin;
+
+    private void CreateCoin()
+    {
+        // (int) 強制轉型 - 強制將浮點數轉為整數 (只有這兩個之間可以強制轉) , 去小數點
+        int r = (int)Random.Range(data.coinRange.x, data.coinRange.y);
+
+        for (int i = 0; i < r ; i++)
+        {
+            Instantiate(coin, transform.position + transform.up * 2, transform.rotation);
+        }
     }
 }

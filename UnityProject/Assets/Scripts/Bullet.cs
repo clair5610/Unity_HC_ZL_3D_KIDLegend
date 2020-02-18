@@ -18,13 +18,13 @@ public class Bullet : MonoBehaviour
     /// <param name="other"></param>
     private void OnTriggerEnter(Collider other)
     {
-        if (!player && other.name == "女孩")                        // 如果碰到.名稱 = "女孩"
+        if (!player && other.name == "女孩")                // 如果碰到.名稱 = "女孩"
         {
-            other.GetComponent<player>().Hit(damage);    // 取得<玩家>().受傷(傷害值)
+            other.GetComponent<player>().Hit(damage);       // 取得<玩家>().受傷(傷害值)
         }
-        else if (player && other.tag == "敵人")                   // 如果碰到.名稱 = "女孩"
+        else if (player && other.tag == "敵人" && other.GetComponent<Enemy>())      // 如果碰到.名稱 = "女孩"
         {
-            other.GetComponent<Enemy>().Hit(damage);    // 取得<玩家>().受傷(傷害值)
+            other.GetComponent<Enemy>().Hit(damage);                                // 取得<玩家>().受傷(傷害值)
             Destroy(gameObject);
         }
     }
