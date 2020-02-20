@@ -5578,7 +5578,7 @@ Mesh:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: pb_Mesh16488
+  m_Name: pb_Mesh29994
   serializedVersion: 10
   m_SubMeshes:
   - serializedVersion: 2
@@ -5747,7 +5747,7 @@ Mesh:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: pb_Mesh16456
+  m_Name: pb_Mesh29964
   serializedVersion: 10
   m_SubMeshes:
   - serializedVersion: 2
@@ -6938,7 +6938,7 @@ GameObject:
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 4294967295
+  m_StaticEditorFlags: 0
   m_IsActive: 1
 --- !u!64 &1938085122
 MeshCollider:
@@ -7811,7 +7811,7 @@ GameObject:
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 4294967295
+  m_StaticEditorFlags: 0
   m_IsActive: 1
 --- !u!64 &2085992585
 MeshCollider:
@@ -8385,11 +8385,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 69298927}
     m_Modifications:
-    - target: {fileID: 3429554530651710792, guid: e984f48f2bc643a4ca4f71dce66f0e38,
-        type: 3}
-      propertyPath: m_Name
-      value: "\u8840\u91CF\u7CFB\u7D71"
-      objectReference: {fileID: 0}
     - target: {fileID: 3429554530651710793, guid: e984f48f2bc643a4ca4f71dce66f0e38,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -8494,6 +8489,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Pivot.y
       value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 3429554530651710792, guid: e984f48f2bc643a4ca4f71dce66f0e38,
+        type: 3}
+      propertyPath: m_Name
+      value: "\u8840\u91CF\u7CFB\u7D71"
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: e984f48f2bc643a4ca4f71dce66f0e38, type: 3}

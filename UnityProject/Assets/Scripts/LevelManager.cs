@@ -30,7 +30,7 @@ public class LevelManager : MonoBehaviour
         // 如果 是 顯示技能 呼叫 顯示技能
         if (autoShowSkill) ShowSkill();
         // 如果 是 自動開門 延遲呼叫 開門方法
-        if (autoOpenDoor) Invoke("OpenDoor", 6);
+        //if (autoOpenDoor) Invoke("OpenDoor", 6);
 
         // 延遲調用("方法名稱"， 延遲時間)
         // Invoke("OpenDoor", 6);
@@ -74,8 +74,18 @@ public class LevelManager : MonoBehaviour
             yield return new WaitForSeconds(0.005f);        // 等待0.005秒
         }
 
-        // 載入下一關
-        SceneManager.LoadScene("關卡2");
+        yield return new WaitForSeconds(0.2f);
+
+        if (SceneManager.GetActiveScene().name.Contains("魔王"))
+        {
+            // 載入下一關
+            SceneManager.LoadScene(0);
+        }
+        else
+        {
+            int index = SceneManager.GetActiveScene().buildIndex;
+            SceneManager.LoadScene(++index);
+        }
         
     }
     /// <summary>
